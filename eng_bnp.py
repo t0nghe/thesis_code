@@ -1,70 +1,7 @@
-# Last checkpoint: mycode_1103.py
-# This code takes care of English minimal NPs.
+# For function readTree(), refer to:
+# https://www.asc.ohio-state.edu/demarneffe.1/LING5050/material/structured.html
 
-def _readTree(text, ind, verbose=False):
-    """Not to be called alone. Used inside `getMinNP()'.
-    THIS CODE IS PERFECT. This function is borrowed from:
-    https://www.asc.ohio-state.edu/demarneffe.1/LING5050/material/structured.html"""
-    if verbose:
-        print("Reading new subtree", text[ind:][:10])
-
-    # consume any spaces before the tree
-    while text[ind].isspace():
-        ind += 1
-
-    if text[ind] == "(":
-        if verbose:
-            print("Found open paren")
-        tree = []
-        ind += 1
-
-        # record the label after the paren
-        label = ""
-        while not text[ind].isspace() and text != "(":
-            label += text[ind]
-            ind += 1
-
-        tree.append(label)
-        if verbose:
-            print("Read in label:", label)
-
-        # read in all subtrees until right paren
-        subtree = True
-        while subtree:
-            # if this call finds only the right paren it'll return False
-            subtree, ind = _readTree(text, ind, verbose=verbose)
-            if subtree:
-                tree.append(subtree)
-
-        # consume the right paren itself
-        ind += 1
-        assert(text[ind] == ")")
-        ind += 1
-
-        if verbose:
-            print("End of tree", tree)
-
-        return tree, ind
-
-    elif text[ind] == ")":
-        # there is no subtree here; this is the end paren of the parent tree
-        # which we should not consume
-        ind -= 1
-        return False, ind
-
-    else:
-        # the subtree is just a terminal (a word)
-        word = ""
-        while not text[ind].isspace() and text[ind] != ")":
-            word += text[ind]
-            ind += 1
-
-        if verbose:
-            print("Read in word:", word)
-
-        return word, ind
-
-def get_eng_mnp(tree: str) -> list:
+def get_eng_bnp(tree: str) -> list:
     """Main function in this file.
     This function takes in Penn bracketing syntactic tree (str).
     And returns all minimal NPs found in the tree in a list of lists.
@@ -77,9 +14,8 @@ def get_eng_mnp(tree: str) -> list:
     # STOPTAGS = ['PONCT', 'AP', 'AdP', 'COORD', 'NP', 'VN', 'PP', 'SENT', 'VPpart', 'VPinf', 'Srel', 'Ssub', 'Sint', 'ADV']
     # This variable may not be compulsory. Because the only strong indication
     # of stop is a punctuation mark. Other tags all introduce a subtree. And can be removed by isNested().
-    ltree = _readTree(tree, 0)[0]
+    ltree = readTree(tree, 0)[0]
     nps = _traverseTree(ltree)
-    # print('nps', len(nps), nps)
 
     minimal_nps = []
     for np in nps:
@@ -215,5 +151,5 @@ if __name__ == "__main__":
 
     lookat = lines[39]
 
-    for np in get_eng_mnp(lookat):
+    for np in get_eng_bnp(lookat):
         print('*', np)
