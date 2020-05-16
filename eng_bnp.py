@@ -1,5 +1,7 @@
+def readTree():
 # For function readTree(), refer to:
 # https://www.asc.ohio-state.edu/demarneffe.1/LING5050/material/structured.html
+    pass
 
 def get_eng_bnp(tree: str) -> list:
     """Main function in this file.
@@ -16,6 +18,7 @@ def get_eng_bnp(tree: str) -> list:
     # of stop is a punctuation mark. Other tags all introduce a subtree. And can be removed by isNested().
     ltree = readTree(tree, 0)[0]
     nps = _traverseTree(ltree)
+    # print('nps', len(nps), nps)
 
     minimal_nps = []
     for np in nps:
@@ -30,7 +33,7 @@ def get_eng_bnp(tree: str) -> list:
             for i in np:
                 # .startswith() takes in a tuple
                 # if _isNested(i) and i[0].startswith( ('SBAR', 'PP', 'ADJP', 'ADVP', 'CC') ):
-                if i[0].startswith( ('SBAR', 'PP', 'ADVP', 'CC') ):
+                if i[0].startswith( ('SBAR', 'PP', 'ADVP', 'CC', 'WHPP') ):
                     break
                 elif (not _isNested(i)) and _stopPunct(i):
                     break
@@ -71,7 +74,7 @@ def get_eng_bnp(tree: str) -> list:
     return stripped_phrases
 
 def _unpack(np):
-    """Helper function called in getMinNP.
+    """Helper function called in get_eng_bnp.
     This function takes in a NP as a list. Ideally this shouldn't
     be necessary. But as it transpires, consturcts like: 
     > ['NP-OBJ', ['D', 'de'], ['N', ['A', 'beaux'], ['N', 'jours']]]
@@ -131,7 +134,7 @@ def _traverseTree(ltree: list) -> list:
 
     # The latter condition to account for French phrase eg.
     # "(N (N crise) (P de) (N confiance))"
-    if ltree[0].startswith('NP'): 
+    if ltree[0].startswith('NP') or ltree[0].startswith('WHNP'): 
         to_return.append(ltree)
     # elif (ltree[0] == 'NML') and (len(ltree) > 2 or not _isFlat(ltree)):
     #     to_return.append(ltree)
@@ -144,12 +147,32 @@ def _traverseTree(ltree: list) -> list:
 
 if __name__ == "__main__":
 
-    # Currently testing on samples1103.txt, in which 0-14 are in French
+        # Currently testing on samples1103.txt, in which 0-14 are in French
     # the rest are in English.
     with open('english_sample_trees.txt', 'r') as frin:
         lines = frin.readlines()
 
-    lookat = lines[39]
+    test1 = lines[39]
 
-    for np in get_eng_bnp(lookat):
+    test2 = """(ROOT
+  (S
+    (NP (NN Basil))
+    (VP (VBZ comes)
+      (PP (IN in)
+        (NP
+          (NP (JJ many) (JJ different) (NNS varieties))
+          (, ,)
+          (SBAR
+            (WHNP
+              (NP (DT each))
+              (WHPP (IN of)
+                (WHNP (WDT which))))
+            (S
+              (VP (VBP have)
+                (NP (DT a) (JJ unique) (NN flavor)
+                  (CC and)
+                  (NN smell))))))))
+    (. .)))"""
+
+    for np in get_eng_bnp(test2):
         print('*', np)

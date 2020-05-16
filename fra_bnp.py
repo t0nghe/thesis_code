@@ -1,5 +1,7 @@
+def readTree():
 # For function readTree(), refer to:
 # https://www.asc.ohio-state.edu/demarneffe.1/LING5050/material/structured.html
+    pass
 
 def get_fra_mnp(tree: str) -> list:
     """Main function in this file.
