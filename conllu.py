@@ -8,7 +8,7 @@ class Tree:
         - How are relations marked with clitics? Eg, with `*T*' or `du'?
             - all relations go to original forms. Eg. There's nothing for `du', but there are things for `de' and `le'.
     2) able to load original UD files and extended UD files.
-        - One column is added at the end (column 11 at index 10) dubbed `MNP'.
+        - One column is added at the end (column 11 at index 10) dubbed `BNP'.
 
     * The following features can only be called when the tree is tagged with BIO.
 
@@ -27,12 +27,12 @@ class Tree:
     * Morphological features:
         - What morphs are universal to all POS? (Gender and number!!!)
 
-    * When we output a MNP-marked tree, the combined lines in a UD will be discarded.
+    * When we output a BNP-marked tree, the combined lines in a UD will be discarded.
     """
 
     class Token:
 
-        def __init__(self, idx, form, lemma, pos, xpos, feats, head, rel, deps, misc, mnp=None):
+        def __init__(self, idx, form, lemma, pos, xpos, feats, head, rel, deps, misc, bnp=None):
             """Takes in a tuple of attributes"""
             self.idx = idx
             self.form = form  # Column 2
@@ -44,7 +44,7 @@ class Tree:
             self.rel = rel  # Column which
             self.deps = deps
             self.misc = misc
-            self.mnp = mnp # When we mark a Token in the span of a minimal NP, we change this to 'B' or "I" or "O"
+            self.bnp = bnp # When we mark a Token in the span of a minimal NP, we change this to 'B' or "I" or "O"
             self.nnfeat = None
 
         def _get_mf(self):
@@ -85,7 +85,7 @@ class Tree:
         # TODO Implement other methods to output other trainable features,
         # will be called `nnfeat' to distinguish from morphological features.
 
-    def __init__(self, string, mnp_marked=False):
+    def __init__(self, string, bnp_marked=False):
         """Initialize the object from a string represents a tree"""
         self.tokens = {}  # A dictionary that organizes tokens
         self.children = defaultdict(list) 
@@ -109,15 +109,15 @@ class Tree:
                 rel = cols[7]
                 deps = cols[8]
                 misc = cols[9]
-                if mnp_marked:
-                    mnp = cols[10] # TODO Change this line to reflect re
-                    self.tokens[idx] = self.Token(idx, form, lemma, pos, xpos, feats, head, rel, deps, misc, mnp)
+                if bnp_marked:
+                    bnp = cols[10] # TODO Change this line to reflect re
+                    self.tokens[idx] = self.Token(idx, form, lemma, pos, xpos, feats, head, rel, deps, misc, bnp)
                 else:
                     self.tokens[idx] = self.Token(idx, form, lemma, pos, xpos, feats, head, rel, deps, misc)
                 self.children[head].append(idx)
 
         # This may not be necessary if we implement a method.
-        self.mnp_marked = mnp_marked 
+        self.bnp_marked = bnp_marked 
 
     def __len__(self):
         return len(self.tokens)
@@ -153,7 +153,7 @@ class Tree:
     def list_bios(self):
         bios = []
         for i in self.tokens:
-            bios.append(self.tokens[i].mnp)
+            bios.append(self.tokens[i].bnp)
         return bios
 
     def list_pos(self):
@@ -178,11 +178,11 @@ class Tree:
                 match.append(False)
         return all(match)
 
-    def load_mnp(self, phrases):
+    def load_bnp(self, phrases):
         """phrases: a list that contains phrases in the form of lists"""
         # [['cet', 'éclatement'], ["l'", 'audience'], ['qui'], ['la', 'hantise'], ['leurs', 'aînées'], ['le', 'même', 'registre'], ['*T*', 'triptyque'], ['qui'], ['le', 'fronton'], ['la', 'république']]
         # DONE FINISH THIS METHOD!
-        assert self.mnp_marked == False
+        assert self.bnp_marked == False
 
         # These two numbers will be useful to see if all Minimal NPs found in PTBs
         # are marked.
@@ -214,11 +214,11 @@ class Tree:
                     for i in range(len(tokens_to_match)):
                         # print(tokens_to_match[i].form)
                         if i == 0:
-                            tokens_to_match[i].mnp = 'B'
+                            tokens_to_match[i].bnp = 'B'
                             b_count += 1
                             bw_count += 1
                         else:
-                            tokens_to_match[i].mnp = 'I'
+                            tokens_to_match[i].bnp = 'I'
                             bw_count += 1
                     pointer += 1
                     break
@@ -226,10 +226,10 @@ class Tree:
                     pointer += 1
 
         for tok in self.tokens:
-            if not self.tokens[tok].mnp:
-                self.tokens[tok].mnp = 'O'
+            if not self.tokens[tok].bnp:
+                self.tokens[tok].bnp = 'O'
 
-        self.mnp_marked = True
+        self.bnp_marked = True
 
         if ph_count == b_count and phw_count == bw_count:
             return 'PERFECT! Total phrases: {}. Total words: {}.'.format(ph_count, phw_count)
@@ -237,16 +237,16 @@ class Tree:
             return 'XXXXXXX! Marked phrases: {}. Marked tokens: {}.\n{}'.format(b_count/(ph_count+0.0000001), bw_count/(phw_count+0.0000001), str(ph_copy))
 
     def output_ext_tree(self):
-        """This method prints the dep tree with MNPs
+        """This method prints the dep tree with bnps
         marked in an extended conllu file."""
         # TODO In order to print exactly same trees
         # TODO Wait! How do they treat stuff like
         # y-a-t'il in the French UD?
-        assert self.mnp_marked == True
+        assert self.bnp_marked == True
         output = self.sentid_line+'\n'
         for tok in self.tokens.values():
             line = '{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(
-                tok.idx, tok.form, tok.lemma, tok.pos, tok.xpos, tok.feats, tok.head, tok.rel, tok.deps, tok.misc, tok.mnp
+                tok.idx, tok.form, tok.lemma, tok.pos, tok.xpos, tok.feats, tok.head, tok.rel, tok.deps, tok.misc, tok.bnp
             )
             output += line
         output += '\n'
@@ -286,10 +286,10 @@ class Tree:
         output = ''
         for i in self.tokens:
             if not mf:
-                line = '{}\t{}\n'.format(self.tokens[i].pos, self.tokens[i].mnp)
+                line = '{}\t{}\n'.format(self.tokens[i].pos, self.tokens[i].bnp)
             else:
                 f1, f2, f3, f4, f5, f6, f7, f8 = self.tokens[i]._get_mf()
-                line = '{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(self.tokens[i].pos, f1, f2, f3, f4, f5, f6, f7, f8, self.tokens[i].mnp)
+                line = '{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(self.tokens[i].pos, f1, f2, f3, f4, f5, f6, f7, f8, self.tokens[i].bnp)
             output += line
         return output + '\n'
 
@@ -313,7 +313,7 @@ class Tree:
                     self.tokens[i].pos,
                     previous_tok_is_head,
                     next_tok_is_head,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             else:
                 f1, f2, f3, f4, f5, f6, f7, f8 = self.tokens[i]._get_mf()
@@ -321,7 +321,7 @@ class Tree:
                     self.tokens[i].pos, f1, f2, f3, f4, f5, f6, f7, f8,
                     previous_tok_is_head,
                     next_tok_is_head,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             output += line
         
@@ -356,7 +356,7 @@ class Tree:
                     self.tokens[i].pos,
                     previous_tok_is_head,
                     next_tok_is_head,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             else:
                 f1, f2, f3, f4, f5, f6, f7, f8 = self.tokens[i]._get_mf()
@@ -364,7 +364,7 @@ class Tree:
                     self.tokens[i].pos, f1, f2, f3, f4, f5, f6, f7, f8,
                     previous_tok_is_head,
                     next_tok_is_head,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
 
             output += line
@@ -392,7 +392,7 @@ class Tree:
                     self.tokens[i].pos,
                     self.tokens[i].rel,
                     parent_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             else:
                 f1, f2, f3, f4, f5, f6, f7, f8 = self.tokens[i]._get_mf()
@@ -401,7 +401,7 @@ class Tree:
                     self.tokens[i].pos, f1, f2, f3, f4, f5, f6, f7, f8,
                     self.tokens[i].rel,
                     parent_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             output += line
         return output + '\n'
@@ -444,7 +444,7 @@ class Tree:
                     parent_pos,
                     parent_to_grand_rel,
                     grand_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             else:
                 f1, f2, f3, f4, f5, f6, f7, f8 = self.tokens[i]._get_mf()
@@ -453,7 +453,7 @@ class Tree:
                     self.tokens[i].pos, f1, f2, f3, f4, f5, f6, f7, f8, self.tokens[i].rel,
                     parent_pos, parent_to_grand_rel,
                     grand_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             output += line
         return output + '\n'
@@ -476,7 +476,7 @@ class Tree:
                 line = '{}\t{}\t{}\n'.format(
                     self.tokens[i].pos,
                     parent_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             else:
                 f1, f2, f3, f4, f5, f6, f7, f8 = self.tokens[i]._get_mf()
@@ -484,7 +484,7 @@ class Tree:
                 line = '{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(
                     self.tokens[i].pos, f1, f2, f3, f4, f5, f6, f7, f8,
                     parent_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
 
             output += line
@@ -523,7 +523,7 @@ class Tree:
                     self.tokens[i].pos,
                     parent_pos,
                     grand_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             else:
                 f1, f2, f3, f4, f5, f6, f7, f8 = self.tokens[i]._get_mf()
@@ -532,7 +532,7 @@ class Tree:
                     self.tokens[i].pos, f1, f2, f3, f4, f5, f6, f7, f8,
                     parent_pos,
                     grand_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             output += line
         return output + '\n'
@@ -567,7 +567,7 @@ class Tree:
 
             if not mf:
                 line = '{}\t{}\t{}\t{}\t{}\n'.format(
-                    this_pos, p_pos, left_child_pos, right_child_pos, self.tokens[i].mnp
+                    this_pos, p_pos, left_child_pos, right_child_pos, self.tokens[i].bnp
                 )
             else:
                 line = '{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(
@@ -575,7 +575,7 @@ class Tree:
                     p_pos,
                     left_child_pos,
                     right_child_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             output += line
 
@@ -619,7 +619,7 @@ class Tree:
                     this_pos, this_dep, p_pos,
                     left_child_dep, left_child_pos,
                     right_child_dep, right_child_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
             else:
                 #        1  2   3   4   5    6   7   8   9  10  11  12  13  14  15  16
@@ -628,7 +628,7 @@ class Tree:
                     this_dep, p_pos,
                     left_child_dep, left_child_pos,
                     right_child_dep, right_child_pos,
-                    self.tokens[i].mnp
+                    self.tokens[i].bnp
                 )
 
             output += line
