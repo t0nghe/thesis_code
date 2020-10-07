@@ -34,7 +34,7 @@ The training component `earley_train.py` uses annotated syntactic trees as train
 
 **Crawling and indexing a website and comparing with Google**
 
-This is an assignment for the Information Retrieval course. In [ir_crawl.py](projects/ir_crawl.py) I scraped the official website of Uppsala kommun. The scraping process started from the homepage, unvisited pages were pushed to a stack and were ranked according to the number of incoming links. All scraped pages were converted to TREC foramt and were index using document retrieval engine Indri [https://lemur.sourceforge.io/indri/]. To compare the effectiveness of this index, measures such as P@10 (precision at 10), MAP (mean average precision) and DCG@10 (discounted cumulative gain at 10) were calculated on several query terms.
+This is an assignment for the Information Retrieval course. In [ir_crawl.py](projects/ir_crawl.py) I scraped the official website of Uppsala kommun. The scraping process started from the homepage, unvisited pages were pushed to a stack and were ranked according to the number of incoming links. All scraped pages were converted to TREC foramt and were index using document retrieval engine [Indri](https://lemur.sourceforge.io/indri/). To compare the effectiveness of this index, measures such as P@10 (precision at 10), MAP (mean average precision) and DCG@10 (discounted cumulative gain at 10) were calculated on several query terms.
 
 **Scraping Wikipedia** 
 
