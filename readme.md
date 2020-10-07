@@ -1,4 +1,8 @@
-# Education and Programming Projects
+# Programming Projects and Education
+
+## Programming Learning
+
+I regularly practice programming in Python and JavaScript by solving LeetCode challenges. My solutions are shared in [n00bcode](https://github.com/t0nghe/n00bcode) repository.
 
 ## Courses I Took
 
@@ -35,7 +39,3 @@ This is an assignment for the Information Retrieval course. In [ir_crawl.py](ass
 **Scraping Wikipedia** 
 
 This is an assignment in the Advanced Programming course. In [prog_scraping.py](assignments/prog_scraping.py), I used `urllib` to fetch webpages from Wikipedia; `BeautifulSoup` to navigate DOM on a page.
-
-## Programming Learning
-
-I regularly practice programming in Python and JavaScript by solving LeetCode challenges. My solutions are shared in [n00bcode](https://github.com/t0nghe/n00bcode) repository.
