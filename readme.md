@@ -1,5 +1,7 @@
 # Profile
 
+My name is Tonghe Wang. I obtained MA in Language Technology at UU in 2020. This is a profile that reflects how I've been learning and improving my skills.
+
 ## Programming Learning
 
 I regularly practice programming in Python and JavaScript by solving LeetCode challenges. My solutions are shared in [n00bcode](https://github.com/t0nghe/n00bcode) repository.
