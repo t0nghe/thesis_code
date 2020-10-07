@@ -1,6 +1,6 @@
-# Courses and Selected Assignment Projects
+# Education and Programming Projects
 
-## Courses
+## Courses I Took
 
 *Course name (credits, grade)*
 
@@ -16,26 +16,26 @@
 * Natural Language Processing (15, G)
 * Syntactic Parsing (7.5, G)
 
-## Programming Learning
-
-I regularly practice programming in Python and JavaScript by solving LeetCode challenges. My solutions are shared in [n00bcode](https://github.com/t0nghe/n00bcode) repository. 
-
 ## Assignments and Projects
 
 **Master's Thesis**
 
-In my thesis, I used a Bi-LSTM architecture to tag noun phrases in Universal Dependencies corpora. Python scripts used for pre-processing the data and training the network are shared in my [thesis_code](/thesis) repository. 
+In my [master's thesis](https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1438674&dswid=-1934), I used a Bi-LSTM architecture to tag noun phrases in Universal Dependencies corpora. Python scripts used for pre-processing the data and training the network are shared in my [thesis_code](/thesis) repository. A `readme` file is added to explain how each component works.
 
 **Implementing Earley parser**
 
-In this assignment in the Syntactic Parsing course, I implemented the Earley algorithm for constituency parsing. [earley_train.py](projects/earley_train.py) and [earley_parse.py](projects/earley_parse.py) are respectively the training and parsing components of the parser. 
+In this assignment in the Syntactic Parsing course, I implemented the Earley algorithm for constituency parsing. [earley_train.py](assignments/earley_train.py) and [earley_parse.py](assignments/earley_parse.py) are respectively the training and parsing components of the parser. 
 
 The training component `earley_train.py` uses annotated syntactic trees as training data. From such training data, it learns production rules from the tree structure, terminals such as POS tags, and a vocabulary of most frequent words. The parsing component `earley_parse.py` uses the learned information to parse input sentences using the Earley algorithm. At each turn, it iterates through all states in the chart. This process is compounded by the fact that the Earley algorithm runs on cubic time when parsing.
 
 **Crawling and indexing a website and comparing with Google**
 
-This is an assignment for the Information Retrieval course. In [ir_crawl.py](projects/ir_crawl.py) I scraped the official website of Uppsala kommun. The scraping process started from the homepage, unvisited pages were pushed to a stack and were ranked according to the number of incoming links. All scraped pages were converted to TREC foramt and were index using document retrieval engine [Indri](https://lemur.sourceforge.io/indri/). To compare the effectiveness of this index, measures such as P@10 (precision at 10), MAP (mean average precision) and DCG@10 (discounted cumulative gain at 10) were calculated on several query terms.
+This is an assignment for the Information Retrieval course. In [ir_crawl.py](assignments/ir_crawl.py) I scraped the official website of Uppsala kommun. The scraping process started from the homepage, unvisited pages were pushed to a stack and were ranked according to the number of incoming links. All scraped pages were converted to TREC foramt and were index using document retrieval engine [Indri](https://lemur.sourceforge.io/indri/). To compare the effectiveness of this index, measures such as P@10 (precision at 10), MAP (mean average precision) and DCG@10 (discounted cumulative gain at 10) were calculated on several query terms.
 
 **Scraping Wikipedia** 
 
-This is an assignment in the Advanced Programming course. In [prog_scraping.py](projects/prog_scraping.py), I used `urllib` to fetch webpages from Wikipedia; `BeautifulSoup` to navigate DOM on a page.
+This is an assignment in the Advanced Programming course. In [prog_scraping.py](assignments/prog_scraping.py), I used `urllib` to fetch webpages from Wikipedia; `BeautifulSoup` to navigate DOM on a page.
+
+## Programming Learning
+
+I regularly practice programming in Python and JavaScript by solving LeetCode challenges. My solutions are shared in [n00bcode](https://github.com/t0nghe/n00bcode) repository.
