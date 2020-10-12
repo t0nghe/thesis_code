@@ -1,10 +1,10 @@
 # Profile
 
-My name is Tonghe Wang. I obtained MA in Language Technology at UU in 2020. This is a profile that reflects how I've been learning and improving my skills.
+My name is Tonghe Wang. I obtained MA in Computational Linguistics/Language Technology at Uppsala University, Sweden in 2020. This is a profile that reflects my academic achievement and my learning track.
 
-## Programming Learning
+## Learning Projects
 
-I regularly practice programming in Python and JavaScript by solving LeetCode challenges. My solutions are shared in [n00bcode](https://github.com/t0nghe/n00bcode) repository.
+My personal learning projects are shared in the [learning](https://github.com/t0nghe/learning) repository. Specifically, I learn about algorithms and data structures by solving LeetCode challenges in Python and JavaScript. I learn JavaScript-based web development following the *[Full Stack Open](https://fullstackopen.com/en/)* online course given by Helsinki University. I read *[Hands-On Machine Learning 2](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/)* to better understand machine learning and deep learning techniques. These are long-term projects and I'll tackle them step by step.
 
 ## Courses I Took
 
