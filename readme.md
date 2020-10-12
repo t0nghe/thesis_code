@@ -1,6 +1,6 @@
 # Profile
 
-My name is Tonghe Wang. I obtained MA in Computational Linguistics/Language Technology at Uppsala University, Sweden in 2020. This is a profile that reflects my academic achievement and my learning track.
+My name is Tonghe Wang. I obtained MA in Computational Linguistics/Language Technology at Uppsala University, Sweden in 2020. This is a profile that reflects my learning track.
 
 ## Learning Projects
 
