@@ -4,7 +4,11 @@ My name is Tonghe Wang. I obtained MA in Computational Linguistics/Language Tech
 
 ## Learning Projects
 
-My personal learning projects are shared in the [learning](https://github.com/t0nghe/learning) repository. Specifically, I learn about and practice algorithms and data structures by solving LeetCode challenges in Python and JavaScript. I'm also learning web development with JavaScript and Python following the *[CS50 Web Dev](https://cs50.harvard.edu/web/2020/)* online course given by Harvard. I plan to read *[Hands-On Machine Learning 2](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/)* to better understand machine learning and deep learning techniques.
+My personal learning projects are shared in the [learning](https://github.com/t0nghe/learning) repository. Specifically, I learn about and practice algorithms and data structures by solving LeetCode challenges in Python and JavaScript ([here are my solutions](https://github.com/t0nghe/learning/tree/master/LeetCode)). I'm also learning web development with JavaScript and Python following the *[CS50 Web Dev](https://cs50.harvard.edu/web/2020/)* online course given by Harvard. I plan to read *[Hands-On Machine Learning 2](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/)* to better understand machine learning and deep learning techniques.
+
+*Finished*
+
+* Coursera: *[Neural Networks and Deep Learning](https://www.coursera.org/learn/neural-networks-deep-learning)* ([certificate](https://www.coursera.org/account/accomplishments/verify/FRE6BU2SZVGX)).
 
 ## Courses I Took
 
