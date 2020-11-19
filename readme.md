@@ -4,7 +4,7 @@ My name is Tonghe Wang. I obtained MA in Computational Linguistics/Language Tech
 
 ## Learning Projects
 
-My personal learning projects are shared in the [learning](https://github.com/t0nghe/learning) repository. Specifically, I learn about algorithms and data structures by solving LeetCode challenges in Python and JavaScript. I learn JavaScript-based web development following the *[Full Stack Open](https://fullstackopen.com/en/)* online course given by Helsinki University. I read *[Hands-On Machine Learning 2](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/)* to better understand machine learning and deep learning techniques. These are long-term projects and I'll tackle them step by step.
+My personal learning projects are shared in the [learning](https://github.com/t0nghe/learning) repository. Specifically, I learn about and practice algorithms and data structures by solving LeetCode challenges in Python and JavaScript. I'm also learning web development with JavaScript and Python following the *[CS50 Web Dev](https://cs50.harvard.edu/web/2020/)* online course given by Harvard. I plan to read *[Hands-On Machine Learning 2](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/)* to better understand machine learning and deep learning techniques.
 
 ## Courses I Took
 
